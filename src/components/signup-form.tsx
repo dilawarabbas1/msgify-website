@@ -1,39 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { API_BASE, PORTAL_URL, COUNTRIES, type Plan } from '@/lib/constants';
+import { useState } from 'react';
+import { API_BASE, PORTAL_URL, COUNTRIES } from '@/lib/constants';
 
 export function SignupForm() {
-  const [plans, setPlans] = useState<Plan[]>([]);
-  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-
-  function fetchPlans() {
-    setLoading(true);
-    fetch(`${API_BASE}/api/subscription/plans/public`)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((data) => {
-        if (data.success && data.plans?.length) {
-          const sorted = data.plans.sort((a: Plan, b: Plan) => a.basePrice - b.basePrice);
-          setPlans(sorted);
-          setSelectedPlanId(sorted[0]._id);
-        }
-      })
-      .catch((err) => {
-        console.error('Failed to load plans:', err.message);
-      })
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => {
-    fetchPlans();
-  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -49,10 +22,6 @@ export function SignupForm() {
       setError('Passwords do not match');
       return;
     }
-    if (!selectedPlanId) {
-      setError('Please select a package');
-      return;
-    }
 
     setSubmitting(true);
     try {
@@ -66,7 +35,6 @@ export function SignupForm() {
           companyName: fd.get('companyName'),
           phone: fd.get('phone'),
           country: fd.get('country'),
-          subscriptionPlanId: selectedPlanId,
         }),
       });
       const data = await res.json();
@@ -187,59 +155,6 @@ export function SignupForm() {
           placeholder="Re-enter your password"
           className="w-full px-3.5 py-2.5 border-[1.5px] border-gray-200 rounded-[10px] text-[15px] text-gray-800 outline-none focus:border-green-500 focus:ring-[3px] focus:ring-green-500/10 placeholder:text-gray-400"
         />
-      </div>
-
-      <div>
-        <label className="block text-[13px] font-semibold text-gray-700 mb-1.5">
-          Select a Package <span className="text-red-500">*</span>
-        </label>
-        {loading ? (
-          <div className="text-center py-5 text-gray-400 text-sm">Loading available packages...</div>
-        ) : plans.length === 0 ? (
-          <div className="text-center py-5">
-            <p className="text-red-500 text-sm mb-2">Failed to load packages.</p>
-            <button
-              type="button"
-              onClick={fetchPlans}
-              className="text-sm text-green-600 font-medium hover:underline cursor-pointer"
-            >
-              Try Again
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {plans.map((plan) => (
-              <label
-                key={plan._id}
-                className={`flex items-center gap-3 p-3.5 border-[1.5px] rounded-[10px] cursor-pointer transition-all ${
-                  selectedPlanId === plan._id
-                    ? 'border-green-500 bg-green-50'
-                    : 'border-gray-200 hover:border-green-300 hover:bg-green-50'
-                }`}
-                onClick={() => setSelectedPlanId(plan._id)}
-              >
-                <div
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${
-                    selectedPlanId === plan._id
-                      ? 'border-green-500 bg-green-500'
-                      : 'border-gray-300'
-                  }`}
-                >
-                  {selectedPlanId === plan._id && <div className="w-2 h-2 bg-white rounded-full" />}
-                </div>
-                <div className="flex-1">
-                  <div className="text-[15px] font-semibold text-gray-800">{plan.name}</div>
-                  <div className="text-xs text-gray-400">
-                    {plan.includedNumbers} number{plan.includedNumbers > 1 ? 's' : ''} &middot; {plan.includedNumbers * 3} msg/min
-                  </div>
-                </div>
-                <div className="text-base font-bold text-green-600">
-                  ${plan.basePrice}<span className="text-xs font-normal text-gray-400">/mo</span>
-                </div>
-              </label>
-            ))}
-          </div>
-        )}
       </div>
 
       <button

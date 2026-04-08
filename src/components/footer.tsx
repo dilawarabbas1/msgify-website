@@ -8,12 +8,12 @@ interface FooterLink {
 
 const columns: { title: string; links: FooterLink[] }[] = [
   { title: 'Product', links: [
-    { label: 'Bulk Campaigns', href: '/#features' },
-    { label: 'Inbox', href: '/#capabilities' },
-    { label: 'Contacts', href: '/#features' },
-    { label: 'Templates', href: '/#features' },
-    { label: 'Channels', href: '/#features' },
-    { label: 'API', href: '/#api' },
+    { label: 'Bulk Campaigns', href: '/products/campaigns' },
+    { label: 'Inbox', href: '/products/inbox' },
+    { label: 'Contacts', href: '/products/contacts' },
+    { label: 'Templates', href: '/products/templates' },
+    { label: 'Channels', href: '/products/channels' },
+    { label: 'API', href: '/products/api' },
   ]},
   { title: 'Solutions', links: [
     { label: 'E-Commerce', href: '/solutions/e-commerce' },
@@ -24,17 +24,16 @@ const columns: { title: string; links: FooterLink[] }[] = [
   ]},
   { title: 'Resources', links: [
     { label: 'Documentation', href: '#' },
-    { label: 'API Reference', href: '/#api' },
+    { label: 'API Reference', href: '/products/api' },
     { label: 'Blog', href: '#' },
     { label: 'Case Studies', href: '#' },
-    { label: 'Support', href: '#' },
+    { label: 'Support', href: '/contact' },
   ]},
   { title: 'Company', links: [
-    { label: 'About Us', href: '#' },
-    { label: 'Careers', href: '#' },
-    { label: 'Privacy Policy', href: '#' },
-    { label: 'Terms of Service', href: '#' },
-    { label: 'Contact', href: '#' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Terms of Service', href: '/terms' },
+    { label: 'Contact', href: '/contact' },
   ]},
 ];
 

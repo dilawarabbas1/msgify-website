@@ -11,7 +11,7 @@ import { API_BASE, type Plan } from '@/lib/constants';
 async function getPlans(): Promise<Plan[]> {
   try {
     const res = await fetch(`${API_BASE}/api/subscription/plans/public`, {
-      next: { revalidate: 60 },
+      cache: 'no-store',
     });
     const data = await res.json();
     return data.success ? data.plans : [];

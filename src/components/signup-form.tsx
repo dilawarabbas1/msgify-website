@@ -11,9 +11,13 @@ export function SignupForm() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  useEffect(() => {
+  function fetchPlans() {
+    setLoading(true);
     fetch(`${API_BASE}/api/subscription/plans/public`)
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
       .then((data) => {
         if (data.success && data.plans?.length) {
           const sorted = data.plans.sort((a: Plan, b: Plan) => a.basePrice - b.basePrice);
@@ -21,8 +25,14 @@ export function SignupForm() {
           setSelectedPlanId(sorted[0]._id);
         }
       })
-      .catch(() => {})
+      .catch((err) => {
+        console.error('Failed to load plans:', err.message);
+      })
       .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    fetchPlans();
   }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -186,7 +196,16 @@ export function SignupForm() {
         {loading ? (
           <div className="text-center py-5 text-gray-400 text-sm">Loading available packages...</div>
         ) : plans.length === 0 ? (
-          <div className="text-center py-5 text-red-500 text-sm">Failed to load packages. Please refresh.</div>
+          <div className="text-center py-5">
+            <p className="text-red-500 text-sm mb-2">Failed to load packages.</p>
+            <button
+              type="button"
+              onClick={fetchPlans}
+              className="text-sm text-green-600 font-medium hover:underline cursor-pointer"
+            >
+              Try Again
+            </button>
+          </div>
         ) : (
           <div className="space-y-2">
             {plans.map((plan) => (

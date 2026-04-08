@@ -1,11 +1,41 @@
 import Link from 'next/link';
 import { MessageSquare } from 'lucide-react';
 
-const columns = [
-  { title: 'Product', links: ['Bulk Campaigns', 'Inbox', 'Contacts', 'Templates', 'Channels', 'API'] },
-  { title: 'Solutions', links: ['E-Commerce', 'Real Estate', 'Education', 'Healthcare', 'Travel'] },
-  { title: 'Resources', links: ['Documentation', 'API Reference', 'Blog', 'Case Studies', 'Support'] },
-  { title: 'Company', links: ['About Us', 'Careers', 'Privacy Policy', 'Terms of Service', 'Contact'] },
+interface FooterLink {
+  label: string;
+  href: string;
+}
+
+const columns: { title: string; links: FooterLink[] }[] = [
+  { title: 'Product', links: [
+    { label: 'Bulk Campaigns', href: '/#features' },
+    { label: 'Inbox', href: '/#capabilities' },
+    { label: 'Contacts', href: '/#features' },
+    { label: 'Templates', href: '/#features' },
+    { label: 'Channels', href: '/#features' },
+    { label: 'API', href: '/#api' },
+  ]},
+  { title: 'Solutions', links: [
+    { label: 'E-Commerce', href: '/solutions/e-commerce' },
+    { label: 'Real Estate', href: '/solutions/real-estate' },
+    { label: 'Education', href: '/solutions/education' },
+    { label: 'Healthcare', href: '/solutions/healthcare' },
+    { label: 'Travel', href: '/solutions/travel' },
+  ]},
+  { title: 'Resources', links: [
+    { label: 'Documentation', href: '#' },
+    { label: 'API Reference', href: '/#api' },
+    { label: 'Blog', href: '#' },
+    { label: 'Case Studies', href: '#' },
+    { label: 'Support', href: '#' },
+  ]},
+  { title: 'Company', links: [
+    { label: 'About Us', href: '#' },
+    { label: 'Careers', href: '#' },
+    { label: 'Privacy Policy', href: '#' },
+    { label: 'Terms of Service', href: '#' },
+    { label: 'Contact', href: '#' },
+  ]},
 ];
 
 export function Footer() {
@@ -29,8 +59,8 @@ export function Footer() {
               <h4 className="text-white text-sm font-semibold mb-4 uppercase tracking-wider">{col.title}</h4>
               <div className="flex flex-col gap-2">
                 {col.links.map((link) => (
-                  <Link key={link} href="#" className="text-sm hover:text-green-400 transition-colors">
-                    {link}
+                  <Link key={link.label} href={link.href} className="text-sm hover:text-green-400 transition-colors">
+                    {link.label}
                   </Link>
                 ))}
               </div>

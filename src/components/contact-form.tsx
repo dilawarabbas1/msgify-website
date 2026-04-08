@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { API_BASE } from '@/lib/constants';
+import { apiFetch } from '@/lib/api';
 
 export function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
@@ -23,7 +23,7 @@ export function ContactForm() {
     };
 
     try {
-      const res = await fetch(`${API_BASE}/api/contact`, {
+      const res = await apiFetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

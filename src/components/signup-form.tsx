@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { API_BASE, PORTAL_URL, COUNTRIES } from '@/lib/constants';
+import { PORTAL_URL, COUNTRIES } from '@/lib/constants';
+import { apiFetch } from '@/lib/api';
 
 export function SignupForm() {
   const [submitting, setSubmitting] = useState(false);
@@ -25,7 +26,7 @@ export function SignupForm() {
 
     setSubmitting(true);
     try {
-      const res = await fetch(`${API_BASE}/api/auth/register`, {
+      const res = await apiFetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -20,7 +20,7 @@ export default function EducationPage() {
         headline="Engage Students & Parents with"
         headlineHighlight="WhatsApp Automation"
         description="Keep students, parents, and staff connected with instant WhatsApp communication. Automate admissions, send fee reminders, share exam results, and broadcast important announcements."
-        heroImage="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&h=400&fit=crop"
+        heroImage="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=400&fit=crop"
         stats={[
           { value: '95%', label: 'Parent Read Rate' },
           { value: '40%', label: 'Fewer Missed Payments' },

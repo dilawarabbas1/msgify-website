@@ -90,6 +90,12 @@ export function Navbar() {
               {item}
             </Link>
           ))}
+          <Link
+            href="/blog"
+            className="text-[15px] font-medium text-gray-600 hover:text-green-600 transition-colors"
+          >
+            Blog
+          </Link>
         </div>
 
         <div className="hidden lg:flex items-center gap-3">
@@ -124,6 +130,9 @@ export function Navbar() {
               {item}
             </Link>
           ))}
+          <Link href="/blog" className="text-[15px] font-medium text-gray-600 py-2" onClick={() => setMobileOpen(false)}>
+            Blog
+          </Link>
           <div className="border-t border-gray-100 pt-2">
             <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Solutions</span>
             {solutions.map((s) => (
